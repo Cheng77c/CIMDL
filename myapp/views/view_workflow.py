@@ -498,8 +498,9 @@ class Workflow_ModelView_Base():
 
     # @pysnooper.snoop(watch_explode=())
     def get_minio_content(self, key, decompress=True, download=False):
-        if '127.0.0.1' in request.host:
-            return
+        # 注释掉localhost检查，允许本地环境访问离线日志
+        # if '127.0.0.1' in request.host:
+        #     return
         content = ''
         from minio import Minio
         try:

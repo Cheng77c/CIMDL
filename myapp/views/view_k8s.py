@@ -353,8 +353,9 @@ class K8s_View(BaseMyappView):
         # 打开iframe页面
         host_url = "//"+ conf.get("CLUSTERS", {}).get(cluster_name, {}).get("HOST", request.host).split('|')[-1]
 
-        if '127.0.0.1' in request.host or 'localhost' in request.host:
-            return redirect(host_url+f'{self.route_base}/web/log/{cluster_name}/{namespace}/{pod_name}{("/"+container_name) if container_name else ""}')
+        # 注释掉localhost重定向逻辑，避免无限循环
+        # if '127.0.0.1' in request.host or 'localhost' in request.host:
+        #     return redirect(host_url+f'{self.route_base}/web/log/{cluster_name}/{namespace}/{pod_name}{("/"+container_name) if container_name else ""}')
 
         pod_url = host_url + conf.get('K8S_DASHBOARD_CLUSTER','/k8s/dashboard/cluster/') + "#/log/%s/%s/pod?namespace=%s&container=%s" % (namespace, pod_name, namespace, container_name if container_name else pod_name)
         print(pod_url)
@@ -416,11 +417,12 @@ class K8s_View(BaseMyappView):
         # 打开iframe页面
         host_url = "//"+ conf.get("CLUSTERS", {}).get(cluster_name, {}).get("HOST", request.host).split('|')[-1]
 
-        if '127.0.0.1' in request.host or 'localhost' in request.host:
-            if container_name:
-                return redirect(host_url+f'{self.route_base}/web/debug/{cluster_name}/{namespace}/{pod_name}/{container_name}')
-            else:
-                return redirect(host_url + f'{self.route_base}/web/debug/{cluster_name}/{namespace}/{pod_name}')
+        # 注释掉localhost重定向逻辑，避免无限循环
+        # if '127.0.0.1' in request.host or 'localhost' in request.host:
+        #     if container_name:
+        #         return redirect(host_url+f'{self.route_base}/web/debug/{cluster_name}/{namespace}/{pod_name}/{container_name}')
+        #     else:
+        #         return redirect(host_url + f'{self.route_base}/web/debug/{cluster_name}/{namespace}/{pod_name}')
         if container_name:
             pod_url = host_url + conf.get('K8S_DASHBOARD_CLUSTER','/k8s/dashboard/cluster/') + '#/shell/%s/%s/%s?namespace=%s' % (namespace, pod_name, container_name, namespace)
         else:
@@ -560,8 +562,9 @@ class K8s_View(BaseMyappView):
     @expose_api(description="搜索pod和服务",url="/web1/search/<cluster_name>/<namespace>/<search>", methods=["GET", ])
     def web1_search(self, cluster_name, namespace, search):
         host_url = "//" + conf.get("CLUSTERS", {}).get(cluster_name, {}).get("HOST", request.host).split('|')[-1]
-        if '127.0.0.1' in request.host or 'localhost' in request.host:
-            return redirect(host_url+f'{self.route_base}/web/search/{cluster_name}/{namespace}/{search}')
+        # 注释掉localhost重定向逻辑，避免无限循环
+        # if '127.0.0.1' in request.host or 'localhost' in request.host:
+        #     return redirect(host_url+f'{self.route_base}/web/search/{cluster_name}/{namespace}/{search}')
 
         search = search[:50]
         pod_url = host_url+conf.get('K8S_DASHBOARD_CLUSTER','/k8s/dashboard/cluster/') + "#/search?namespace=%s&q=%s" % (namespace, search)

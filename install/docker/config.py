@@ -59,7 +59,7 @@ FLASK_USE_RELOAD = True
 SHOW_STACKTRACE = True
 
 # Extract and use X-Forwarded-For/X-Forwarded-Proto headers?
-ENABLE_PROXY_FIX = False
+ENABLE_PROXY_FIX = True
 
 # ------------------------------
 # GLOBALS FOR APP Builder
@@ -793,7 +793,7 @@ K8S_NETWORK_MODE = 'iptables'   # iptables ipvs
 NOTEBOOK_EXCLUSIVE = False   # notebook 启动是否独占资源
 SERVICE_EXCLUSIVE = False   # 内部服务 启动是否独占资源
 
-MINIO_HOST = 'minio.kubeflow:9000'
+MINIO_HOST = '172.19.0.2:30900'  # MinIO NodePort地址(kind节点IP + NodePort)  # MinIO NodePort地址(kind节点IP + NodePort)  # MinIO NodePort地址(kind节点IP + NodePort)
 
 # 多行分割内网特定host
 HOSTALIASES='''
@@ -834,7 +834,7 @@ CONTAINERD_SOCKET = '/etc/containerd/(hostpath):/etc/containerd/,/run/containerd
 
 WAIT_POD_IMAGES='ccr.ccs.tencentyun.com/cube-studio/wait-pod:v1'
 # notebook，pipeline镜像拉取策略
-IMAGE_PULL_POLICY='Always'    # IfNotPresent   Always
+IMAGE_PULL_POLICY='IfNotPresent'    # IfNotPresent   Always
 
 # 任务资源使用情况地址
 GRAFANA_TASK_PATH='/grafana/d/pod-info/pod-info?var-pod='
